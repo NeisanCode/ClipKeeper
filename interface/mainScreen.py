@@ -39,11 +39,19 @@ class MainScreen(ctk.CTk):
             scrollbar_button_color="#2A2F35",
         )
         self.scroll_frame.pack(fill="both", expand=True, padx=16, pady=16)
+        self.scroll_frame.bind("<Button-4>", self._on_mousewheel)
+        self.scroll_frame.bind("<Button-5>", self._on_mousewheel)
 
         for col in range(3):
             self.scroll_frame.columnconfigure(col, weight=0, minsize=220)
         self.on_app_load()
-        watcher_clipper(self.after(0, self.on_app_load))
+        watcher_clipper(lambda: self.after(0, self.on_app_load))
+
+    def _on_mousewheel(self, event):
+        if event.num == 4:
+            self.scroll_frame._parent_canvas.yview_scroll(-1, "units")
+        elif event.num == 5:
+            self.scroll_frame._parent_canvas.yview_scroll(1, "units")
 
     def createSideBar(self):
         self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)

@@ -53,5 +53,25 @@
         "content": "lambda b=clip_button: self.on_copy(button=b, ...)\n# clip_button est copi\u00e9 au moment de la CR\u00c9ATION de la lambda \u2192 valeur fig\u00e9e \u2705",
         "timestamp": "2026-02-21T22:16:39.435838",
         "id": 11
+    },
+    {
+        "content": "self.scroll_frame.bind(\"<MouseWheel>\", self._on_mousewheel)\n\ndef _on_mousewheel(self, event):\n    self.scroll_frame._parent_canvas.yview_scroll(\n        int(-1 * (event.delta / 120)), \"units\"\n    )",
+        "timestamp": "2026-02-21T22:22:22.079516",
+        "id": 12
+    },
+    {
+        "content": "self.scroll_frame.bind(\"<MouseWheel>\", self._on_mousewheel)\n\ndef _on_mousewheel(self, event):\n    self.scroll_frame._parent_canvas.yview_scroll(\n        int(-1 * (event.delta / 120)), \"units\"\n    )",
+        "timestamp": "2026-02-21T22:24:16.364163",
+        "id": 13
+    },
+    {
+        "content": "# \u274c Tu passes peut-\u00eatre self.after directement\nwatcher_clipper(self.after(0, self.on_app_load))  # s'ex\u00e9cute imm\u00e9diatement et passe le string\n\n# \u2705 Correct \u2014 la lambda doit envelopper l'appel\nwatcher_clipper(lambda: self.after(0, self.on_app_load))",
+        "timestamp": "2026-02-21T22:26:58.130223",
+        "id": 14
+    },
+    {
+        "content": "def _bind_mousewheel(self, widget):\n    widget.bind(\"<MouseWheel>\", self._on_mousewheel)\n    for child in widget.winfo_children():\n        self._bind_mousewheel(child)",
+        "timestamp": "2026-02-21T22:27:54.289237",
+        "id": 15
     }
 ]
