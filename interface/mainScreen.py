@@ -1,5 +1,3 @@
-from venv import create
-
 import customtkinter as ctk
 
 ctk.set_appearance_mode("system")
