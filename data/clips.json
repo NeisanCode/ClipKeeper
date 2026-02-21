@@ -1,0 +1,22 @@
+[
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T12:27:55.812995"
+    },
+    {
+        "content": "pip install pyside6",
+        "timestamp": "2026-02-21T12:28:05.079885"
+    },
+    {
+        "content": "PySimpleGUI",
+        "timestamp": "2026-02-21T12:32:21.728397"
+    },
+    {
+        "content": "pip install PySimpleGUI",
+        "timestamp": "2026-02-21T12:34:58.495950"
+    },
+    {
+        "content": "pip -r uninstall requirements.txt\n",
+        "timestamp": "2026-02-21T12:36:50.675929"
+    }
+]
