@@ -143,5 +143,130 @@
         "content": "import pygame\npygame.mixer.init()\n\ndef play_sound():\n    pygame.mixer.Sound(\"assets/sounds/clipadded.mp3\").play()",
         "timestamp": "2026-02-21T23:01:12.758412",
         "id": 29
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T23:11:20.953154",
+        "id": 30
+    },
+    {
+        "content": "pip install pyside6",
+        "timestamp": "2026-02-21T23:11:24.059297",
+        "id": 31
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T23:12:22.684176",
+        "id": 32
+    },
+    {
+        "content": "pip install pyside6",
+        "timestamp": "2026-02-21T23:12:24.778702",
+        "id": 33
+    },
+    {
+        "content": "PySimpleGUI",
+        "timestamp": "2026-02-21T23:12:29.449026",
+        "id": 34
+    },
+    {
+        "content": "pip -r uninstall requirements.txt\n",
+        "timestamp": "2026-02-21T23:12:31.511885",
+        "id": 35
+    },
+    {
+        "content": "            threading.Thread(\n                target=lambda: playsound(\"assets/sounds/clipadded.mp3\"),\n                daemon=True,\n            ).start()",
+        "timestamp": "2026-02-21T23:13:02.568124",
+        "id": 36
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T23:13:17.556169",
+        "id": 37
+    },
+    {
+        "content": "pip install pyside6",
+        "timestamp": "2026-02-21T23:13:19.094853",
+        "id": 38
+    },
+    {
+        "content": "PySimpleGUI",
+        "timestamp": "2026-02-21T23:13:20.657530",
+        "id": 39
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T23:13:49.867573",
+        "id": 40
+    },
+    {
+        "content": "pip install pyside6",
+        "timestamp": "2026-02-21T23:13:53.106046",
+        "id": 41
+    },
+    {
+        "content": "PySimpleGUI",
+        "timestamp": "2026-02-21T23:13:55.728334",
+        "id": 42
+    },
+    {
+        "content": "from datetime import datetime\nimport customtkinter as ctk\nimport threading\nfrom repo import savejson\nfrom service.service import watcher_clipper\n\n\nctk.set_appearance_mode(\"system\")\n\nctk.FontManager.load_font(\"assets/fonts/Poppins-Bold.ttf\")\nctk.FontManager.load_font(\"assets/fonts/Poppins-Light.ttf\")\nctk.FontManager.load_font(\"assets/fonts/Poppins-Regular.ttf\")\nfrom PIL import Image\n\n\nclass MainScreen(ctk.CTk):\n    CARD_WIDTH = 200\n    CARD_MAX_HEIGHT = 150\n    CARD_CHARS_PER_LINE = 20\n    CARD_MAX_LINES = 4\n\n    def __init__(self):\n        super().__init__()\n        self.FONT_NORMAL = ctk.CTkFont(family=\"Poppins\", size=12)\n        self.FONT_BOLD = ctk.CTkFont(family=\"Poppins\", size=12, weight=\"bold\")\n        self.FONT_TITLE = ctk.CTkFont(family=\"Poppins\", size=24, weight=\"bold\")\n\n        self.title(\"Clipboard Manager\")\n        self.geometry(\"900x600\")\n        self.protocol(\"WM_DELETE_WINDOW\", self.onclose)\n        self.createSideBar()\n\n        self.main_frame = ctk.CTkFrame(self, bg_color=\"#191F25\", fg_color=\"#191F25\")\n        self.main_frame.pack(side=\"left\", fill=\"both\", expand=True)\n\n        self.scroll_frame = ctk.CTkScrollableFrame(\n            self.main_frame,\n            fg_color=\"#191F25\",\n            scrollbar_button_color=\"#2A2F35\",\n        )\n        self.scroll_frame.pack(fill=\"both\", expand=True, padx=16, pady=16)\n        self.scroll_frame.bind(\"<Button-4>\", self._on_mousewheel)\n        self.scroll_frame.bind(\"<Button-5>\", self._on_mousewheel)\n\n        for col in range(3):\n            self.scroll_frame.columnconfigure(col, weight=0, minsize=220)\n        self.on_app_load()\n        watcher_clipper(lambda: self.after(0, self.on_app_load))\n\n    def _on_mousewheel(self, event):\n        if event.num == 4:\n            self.scroll_frame._parent_canvas.yview_scroll(-1, \"units\")\n        elif event.num == 5:\n            self.scroll_frame._parent_canvas.yview_scroll(1, \"units\")\n\n    def createSideBar(self):\n        self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)\n        self.sidebar.pack(side=\"left\", fill=\"both\", expand=False)\n\n        self.clip_elements = ctk.CTkButton(\n            self.sidebar,\n            text=\"Reload\",\n            command=self.on_app_load,\n            font=self.FONT_BOLD,\n            fg_color=\"#1F618D\",\n            hover_color=\"#1F618D\",\n            cursor=\"hand2\",\n        )\n        self.clip_elements.pack(pady=10, padx=14)\n\n        self.button_close = ctk.CTkButton(\n            self.sidebar,\n            text=\"Close\",\n            command=self.on_close_click,\n            font=self.FONT_BOLD,\n            fg_color=\"#C0392B\",\n            hover_color=\"#C0392B\",\n            cursor=\"hand2\",\n        )\n        self.button_close.pack(pady=10, padx=14)\n\n    def on_app_load(self):\n        clips = savejson.load_clips()\n        self.create_clip_elements(clips)\n\n    def on_close_click(self):\n        self.destroy()\n\n    def onclose(self):\n        self.iconify()\n\n    def truncate_text(self, text: str) -> str:\n        max_chars = self.CARD_MAX_LINES * self.CARD_CHARS_PER_LINE\n        if len(text) <= max_chars:\n            return text\n        return text[: max_chars - 1].rstrip() + \"...\"\n\n    def create_clip_elements(self, clips: list[dict]):\n        for widget in self.scroll_frame.winfo_children():\n            widget.destroy()\n\n        for index, clip in enumerate(clips):\n            row = index // 3\n            column = index % 3\n\n            # Outer frame avec taille strictement fix\u00e9e\n            outer = ctk.CTkFrame(\n                self.scroll_frame,\n                fg_color=\"#2A2F35\",\n                corner_radius=8,\n                width=self.CARD_WIDTH,\n                height=self.CARD_MAX_HEIGHT,\n            )\n            outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n            timestamp = datetime.fromisoformat(clip[\"timestamp\"])\n            formatted_timestamp = timestamp.strftime(\"%d/%m/%Y\")\n\n            truncated = self.truncate_text(clip[\"content\"])\n            content = ctk.CTkLabel(\n                outer,\n                text=truncated,\n                font=self.FONT_NORMAL,\n                text_color=\"#FFFFFF\",\n                wraplength=178,\n                justify=\"left\",\n                anchor=\"nw\",\n                width=180,\n            )\n            content.place(x=10, y=44)\n            icon = ctk.CTkImage(Image.open(\"assets/icons/copy.png\"), size=(16, 16))\n\n            clip_button = ctk.CTkButton(\n                outer,\n                text=\"\",\n                font=self.FONT_BOLD,\n                fg_color=\"#1F658D\",\n                hover_color=\"#1F618D\",\n                cursor=\"hand2\",\n                width=32,\n                height=32,\n                image=icon,\n            )\n            clip_button.configure(\n                command=lambda b=clip_button, i=icon, c=clip[\"content\"]: self.on_copy(\n                    button=b,\n                    icon=i,\n                    content=c,\n                )\n            )\n            clip_button.place(x=160, y=8)\n\n    def copy_to_clipboard(self, text: str):\n        self.clipboard_clear()\n        self.clipboard_append(text)\n        self.update()\n\n    def on_copy(self, button: ctk.CTkButton, icon: ctk.CTkImage, content: str):\n        self.copy_to_clipboard(content)\n        check_icon = ctk.CTkImage(Image.open(\"assets/icons/check.png\"), size=(16, 16))\n        button.configure(image=check_icon)\n        threading.Timer(\n            1.5,\n            lambda: self.after(\n                0,\n                lambda: button.configure(image=icon) if button.winfo_exists() else None,\n            ),\n        ).start()\n\n\nif __name__ == \"__main__\":\n    MainScreen().mainloop()\n",
+        "timestamp": "2026-02-21T23:15:19.222800",
+        "id": 43
+    },
+    {
+        "content": "import pyperclip\nimport threading\nimport time\nfrom utils.playsound import playsound\nfrom repo import savejson\n\n\ndef monitor_clipboard(reload: callable):\n    print(\"Starting clipboard monitor...\")\n    last = pyperclip.paste()\n    while True:\n        current = pyperclip.paste()\n        if current != last:\n            savejson.save_clip(current)\n            last = current\n            reload()\n            threading.Thread(\n                target=lambda: playsound(\"assets/sounds/clipadded.mp3\"),\n                daemon=True,\n            ).start()\n        time.sleep(0.5)\n\n\ndef watcher_clipper(reload: callable):\n    threading.Thread(target=monitor_clipboard, args=(reload,), daemon=True).start()\n",
+        "timestamp": "2026-02-21T23:15:30.076601",
+        "id": 44
+    },
+    {
+        "content": "def on_app_load(self):\n    clips = savejson.load_clips()\n    self.create_clip_elements(clips)\n\ndef on_new_clip(self, clip: dict):\n    # D\u00e9cale toutes les cards existantes d'une position\n    for widget in self.scroll_frame.winfo_children():\n        info = widget.grid_info()\n        if info:\n            new_index = int(info[\"row\"]) * 3 + int(info[\"column\"]) + 1\n            widget.grid(row=new_index // 3, column=new_index % 3)\n    # Ins\u00e8re la nouvelle card en position 0\n    self._create_card(clip, index=0)",
+        "timestamp": "2026-02-21T23:18:56.320625",
+        "id": 45
+    },
+    {
+        "content": "def _create_card(self, clip: dict, index: int):\n    row = index // 3\n    column = index % 3\n\n    outer = ctk.CTkFrame(...)\n    outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n    # ... reste du code de cr\u00e9ation\n\ndef create_clip_elements(self, clips: list[dict]):\n    for widget in self.scroll_frame.winfo_children():\n        widget.destroy()\n    for index, clip in enumerate(clips):\n        self._create_card(clip, index)",
+        "timestamp": "2026-02-21T23:20:40.090438",
+        "id": 46
+    },
+    {
+        "content": "outer = ctk.CTkFrame(\n                self.scroll_frame,\n                fg_color=\"#2A2F35\",\n                corner_radius=8,\n                width=self.CARD_WIDTH,\n                height=self.CARD_MAX_HEIGHT,\n            )\n            outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n            timestamp = datetime.fromisoformat(clip[\"timestamp\"])\n            formatted_timestamp = timestamp.strftime(\"%d/%m/%Y\")\n\n            truncated = self.truncate_text(clip[\"content\"])\n            content = ctk.CTkLabel(\n                outer,\n                text=truncated,\n                font=self.FONT_NORMAL,\n                text_color=\"#FFFFFF\",\n                wraplength=178,\n                justify=\"left\",\n                anchor=\"nw\",\n                width=180,\n            )\n            content.place(x=10, y=44)\n            icon = ctk.CTkImage(Image.open(\"assets/icons/copy.png\"), size=(16, 16))\n\n            clip_button = ctk.CTkButton(\n                outer,\n                text=\"\",\n                font=self.FONT_BOLD,\n                fg_color=\"#1F658D\",\n                hover_color=\"#1F618D\",\n                cursor=\"hand2\",\n                width=32,\n                height=32,\n                image=icon,\n            )\n            clip_button.configure(\n                command=lambda b=clip_button, i=icon, c=clip[\"content\"]: self.on_copy(\n                    button=b,\n                    icon=i,\n                    content=c,\n                )\n            )\n            clip_button.place(x=160, y=8)",
+        "timestamp": "2026-02-21T23:21:44.421341",
+        "id": 47
+    },
+    {
+        "content": "row = index // 3\n            column = index % 3\n\n            # Outer frame avec taille strictement fix\u00e9e\n            outer = ctk.CTkFrame(\n                self.scroll_frame,\n                fg_color=\"#2A2F35\",\n                corner_radius=8,\n                width=self.CARD_WIDTH,\n                height=self.CARD_MAX_HEIGHT,\n            )\n            outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n            timestamp = datetime.fromisoformat(clip[\"timestamp\"])\n            formatted_timestamp = timestamp.strftime(\"%d/%m/%Y\")\n\n            truncated = self.truncate_text(clip[\"content\"])\n            content = ctk.CTkLabel(\n                outer,\n                text=truncated,\n                font=self.FONT_NORMAL,\n                text_color=\"#FFFFFF\",\n                wraplength=178,\n                justify=\"left\",\n                anchor=\"nw\",\n                width=180,\n            )\n            content.place(x=10, y=44)\n            icon = ctk.CTkImage(Image.open(\"assets/icons/copy.png\"), size=(16, 16))\n\n            clip_button = ctk.CTkButton(\n                outer,\n                text=\"\",\n                font=self.FONT_BOLD,\n                fg_color=\"#1F658D\",\n                hover_color=\"#1F618D\",\n                cursor=\"hand2\",\n                width=32,\n                height=32,\n                image=icon,\n            )\n            clip_button.configure(\n                command=lambda b=clip_button, i=icon, c=clip[\"content\"]: self.on_copy(\n                    button=b,\n                    icon=i,\n                    content=c,\n                )\n            )\n            clip_button.place(x=160, y=8)",
+        "timestamp": "2026-02-21T23:22:12.092322",
+        "id": 48
+    },
+    {
+        "content": "outer = ctk.CTkFrame(\n                self.scroll_frame,\n                fg_color=\"#2A2F35\",\n                corner_radius=8,\n                width=self.CARD_WIDTH,\n                height=self.CARD_MAX_HEIGHT,\n            )\n            outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n            timestamp = datetime.fromisoformat(clip[\"timestamp\"])\n            formatted_timestamp = timestamp.strftime(\"%d/%m/%Y\")\n\n            truncated = self.truncate_text(clip[\"content\"])\n            content = ctk.CTkLabel(\n                outer,\n                text=truncated,\n                font=self.FONT_NORMAL,\n                text_color=\"#FFFFFF\",\n                wraplength=178,\n                justify=\"left\",\n                anchor=\"nw\",\n                width=180,\n            )\n            content.place(x=10, y=44)\n            icon = ctk.CTkImage(Image.open(\"assets/icons/copy.png\"), size=(16, 16))\n\n            clip_button = ctk.CTkButton(\n                outer,\n                text=\"\",\n                font=self.FONT_BOLD,\n                fg_color=\"#1F658D\",\n                hover_color=\"#1F618D\",\n                cursor=\"hand2\",\n                width=32,\n                height=32,\n                image=icon,\n            )\n            clip_button.configure(\n                command=lambda b=clip_button, i=icon, c=clip[\"content\"]: self.on_copy(\n                    button=b,\n                    icon=i,\n                    content=c,\n                )\n            )\n            clip_button.place(x=160, y=8)",
+        "timestamp": "2026-02-21T23:29:23.460618",
+        "id": 49
+    },
+    {
+        "content": "def _create_card(self, clip: dict, index: int):\n    row = index // 3\n    column = index % 3\n\n    outer = ctk.CTkFrame(...)\n    outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n    # ... reste du code de cr\u00e9ation\n\ndef create_clip_elements(self, clips: list[dict]):\n    for widget in self.scroll_frame.winfo_children():\n        widget.destroy()\n    for index, clip in enumerate(clips):\n        self._create_card(clip, index)",
+        "timestamp": "2026-02-21T23:29:25.553704",
+        "id": 50
+    },
+    {
+        "content": "def on_app_load(self):\n    clips = savejson.load_clips()\n    self.create_clip_elements(clips)\n\ndef on_new_clip(self, clip: dict):\n    # D\u00e9cale toutes les cards existantes d'une position\n    for widget in self.scroll_frame.winfo_children():\n        info = widget.grid_info()\n        if info:\n            new_index = int(info[\"row\"]) * 3 + int(info[\"column\"]) + 1\n            widget.grid(row=new_index // 3, column=new_index % 3)\n    # Ins\u00e8re la nouvelle card en position 0\n    self._create_card(clip, index=0)",
+        "timestamp": "2026-02-21T23:29:27.129515",
+        "id": 51
+    },
+    {
+        "content": "outer = ctk.CTkFrame(\n                self.scroll_frame,\n                fg_color=\"#2A2F35\",\n                corner_radius=8,\n                width=self.CARD_WIDTH,\n                height=self.CARD_MAX_HEIGHT,\n            )\n            outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n            timestamp = datetime.fromisoformat(clip[\"timestamp\"])\n            formatted_timestamp = timestamp.strftime(\"%d/%m/%Y\")\n\n            truncated = self.truncate_text(clip[\"content\"])\n            content = ctk.CTkLabel(\n                outer,\n                text=truncated,\n                font=self.FONT_NORMAL,\n                text_color=\"#FFFFFF\",\n                wraplength=178,\n                justify=\"left\",\n                anchor=\"nw\",\n                width=180,\n            )\n            content.place(x=10, y=44)\n            icon = ctk.CTkImage(Image.open(\"assets/icons/copy.png\"), size=(16, 16))\n\n            clip_button = ctk.CTkButton(\n                outer,\n                text=\"\",\n                font=self.FONT_BOLD,\n                fg_color=\"#1F658D\",\n                hover_color=\"#1F618D\",\n                cursor=\"hand2\",\n                width=32,\n                height=32,\n                image=icon,\n            )\n            clip_button.configure(\n                command=lambda b=clip_button, i=icon, c=clip[\"content\"]: self.on_copy(\n                    button=b,\n                    icon=i,\n                    content=c,\n                )\n            )\n            clip_button.place(x=160, y=8)",
+        "timestamp": "2026-02-21T23:29:30.793289",
+        "id": 52
+    },
+    {
+        "content": "def on_app_load(self):\n    clips = savejson.load_clips()\n    self.create_clip_elements(clips)\n\ndef on_new_clip(self, clip: dict):\n    # D\u00e9cale toutes les cards existantes d'une position\n    for widget in self.scroll_frame.winfo_children():\n        info = widget.grid_info()\n        if info:\n            new_index = int(info[\"row\"]) * 3 + int(info[\"column\"]) + 1\n            widget.grid(row=new_index // 3, column=new_index % 3)\n    # Ins\u00e8re la nouvelle card en position 0\n    self._create_card(clip, index=0)",
+        "timestamp": "2026-02-21T23:29:42.907442",
+        "id": 53
+    },
+    {
+        "content": "outer = ctk.CTkFrame(\n                self.scroll_frame,\n                fg_color=\"#2A2F35\",\n                corner_radius=8,\n                width=self.CARD_WIDTH,\n                height=self.CARD_MAX_HEIGHT,\n            )\n            outer.grid(row=row, column=column, padx=8, pady=8, sticky=\"nw\")\n            timestamp = datetime.fromisoformat(clip[\"timestamp\"])\n            formatted_timestamp = timestamp.strftime(\"%d/%m/%Y\")\n\n            truncated = self.truncate_text(clip[\"content\"])\n            content = ctk.CTkLabel(\n                outer,\n                text=truncated,\n                font=self.FONT_NORMAL,\n                text_color=\"#FFFFFF\",\n                wraplength=178,\n                justify=\"left\",\n                anchor=\"nw\",\n                width=180,\n            )\n            content.place(x=10, y=44)\n            icon = ctk.CTkImage(Image.open(\"assets/icons/copy.png\"), size=(16, 16))\n\n            clip_button = ctk.CTkButton(\n                outer,\n                text=\"\",\n                font=self.FONT_BOLD,\n                fg_color=\"#1F658D\",\n                hover_color=\"#1F618D\",\n                cursor=\"hand2\",\n                width=32,\n                height=32,\n                image=icon,\n            )\n            clip_button.configure(\n                command=lambda b=clip_button, i=icon, c=clip[\"content\"]: self.on_copy(\n                    button=b,\n                    icon=i,\n                    content=c,\n                )\n            )\n            clip_button.place(x=160, y=8)",
+        "timestamp": "2026-02-21T23:29:47.073874",
+        "id": 54
     }
 ]

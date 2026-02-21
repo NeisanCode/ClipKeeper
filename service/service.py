@@ -11,14 +11,14 @@ def monitor_clipboard(reload: callable):
     while True:
         current = pyperclip.paste()
         if current != last:
-            savejson.save_clip(current)
+            clip = savejson.save_clip(current)
             last = current
-            reload()
+            reload(clip)
             threading.Thread(
                 target=lambda: playsound("assets/sounds/clipadded.mp3"),
                 daemon=True,
             ).start()
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 def watcher_clipper(reload: callable):

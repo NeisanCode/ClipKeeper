@@ -18,7 +18,7 @@ def save_clip(content):
     clips.append(clip)
     with open("repo/clips.json", "w") as file:
         json.dump(clips, file, indent=4)
-
+        return clip
 
 def load_clips():
     try:
