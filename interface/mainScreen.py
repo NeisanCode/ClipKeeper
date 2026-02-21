@@ -1,4 +1,9 @@
+from pprint import pprint
+
 import customtkinter as ctk
+
+from repo import savejson
+
 
 ctk.set_appearance_mode("system")
 
@@ -10,8 +15,6 @@ ctk.FontManager.load_font("fonts/Poppins-Regular.ttf")
 class MainScreen(ctk.CTk):
     def __init__(self):
         super().__init__()
-
-        # Les fonts APRES super().__init__()
         self.FONT_NORMAL = ctk.CTkFont(family="Poppins", size=14)
         self.FONT_BOLD = ctk.CTkFont(family="Poppins", size=14, weight="bold")
         self.FONT_TITLE = ctk.CTkFont(family="Poppins", size=24, weight="bold")
@@ -28,7 +31,7 @@ class MainScreen(ctk.CTk):
         self.clip_elements = ctk.CTkButton(
             self.sidebar,
             text="ClipBoard",
-            command=self.on_button_click,
+            command=self.on_button_clip_click,
             font=self.FONT_BOLD,
             fg_color="#1F618D",
             hover_color="#1F618D",
@@ -39,7 +42,7 @@ class MainScreen(ctk.CTk):
         self.button_close = ctk.CTkButton(
             self.sidebar,
             text="Close",
-            command=self.on_button_close,
+            command=self.on_button_close_click,
             font=self.FONT_BOLD,
             fg_color="#C0392B",
             hover_color="#C0392B",
@@ -47,10 +50,13 @@ class MainScreen(ctk.CTk):
         )
         self.button_close.pack(pady=10, padx=14)
 
-    def on_button_click(self):
-        print("Button clicked!")
 
-    def on_button_close(self):
+
+    def on_button_clip_click(self):
+        clips = savejson.load_clips()
+        pprint(clips)
+
+    def on_button_close_click(self):
         self.destroy()
 
     def onclose(self):
