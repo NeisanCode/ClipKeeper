@@ -83,5 +83,65 @@
         "content": "pyperclip",
         "timestamp": "2026-02-21T22:35:41.126936",
         "id": 17
+    },
+    {
+        "content": "uv add playsound",
+        "timestamp": "2026-02-21T22:39:59.873671",
+        "id": 18
+    },
+    {
+        "content": "copy clipboard",
+        "timestamp": "2026-02-21T22:42:25.861218",
+        "id": 19
+    },
+    {
+        "content": "uv add playsound",
+        "timestamp": "2026-02-21T22:49:10.345165",
+        "id": 20
+    },
+    {
+        "content": "  hint: This usually indicates a problem with the package or the build environment.\n  help: If you want to add the package regardless of the failed resolution, provide the `--frozen` flag to skip locking and syncing.",
+        "timestamp": "2026-02-21T22:49:40.069538",
+        "id": 21
+    },
+    {
+        "content": "uv add \"playsound==1.2.2\"",
+        "timestamp": "2026-02-21T22:51:08.725721",
+        "id": 22
+    },
+    {
+        "content": "clipadded",
+        "timestamp": "2026-02-21T22:54:07.388488",
+        "id": 23
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T22:56:02.988750",
+        "id": 24
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T22:58:50.257330",
+        "id": 25
+    },
+    {
+        "content": "import json\n\n\ndef save_clip(content, timestamp):\n    clip = {\"content\": content, \"timestamp\": timestamp}\n\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n    except (FileNotFoundError, json.JSONDecodeError):\n        clips = []\n\n    clips.append(clip)\n\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump(clips, file, indent=4)\n\n\ndef load_clips():\n    try:\n        with open(\"data/clips.json\", \"r\") as file:\n            clips = json.load(file)\n            return clips\n    except FileNotFoundError:\n        return []\n\n\ndef clear_clips():\n    with open(\"data/clips.json\", \"w\") as file:\n        json.dump([], file, indent=4)\n",
+        "timestamp": "2026-02-21T23:00:18.736429",
+        "id": 26
+    },
+    {
+        "content": "ine 91, in _playsoundNix\n    import gi\nModuleNotFoundError: No module named 'gi'",
+        "timestamp": "2026-02-21T23:00:36.152600",
+        "id": 27
+    },
+    {
+        "content": "sudo apt install python3-gi gir1.2-gstreamer-1.0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good\n",
+        "timestamp": "2026-02-21T23:00:57.421275",
+        "id": 28
+    },
+    {
+        "content": "import pygame\npygame.mixer.init()\n\ndef play_sound():\n    pygame.mixer.Sound(\"assets/sounds/clipadded.mp3\").play()",
+        "timestamp": "2026-02-21T23:01:12.758412",
+        "id": 29
     }
 ]

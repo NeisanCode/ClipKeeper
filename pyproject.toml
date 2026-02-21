@@ -7,5 +7,6 @@ requires-python = ">=3.14"
 dependencies = [
   "customtkinter>=5.2.2",
   "pillow>=12.1.1",
+  "pygame>=2.6.1",
   "pyperclip>=1.11.0",
 ]

@@ -158,7 +158,13 @@ class MainScreen(ctk.CTk):
         self.copy_to_clipboard(content)
         check_icon = ctk.CTkImage(Image.open("assets/icons/check.png"), size=(16, 16))
         button.configure(image=check_icon)
-        threading.Timer(1.5, lambda: button.configure(image=icon)).start()
+        threading.Timer(
+            1.5,
+            lambda: self.after(
+                0,
+                lambda: button.configure(image=icon) if button.winfo_exists() else None,
+            ),
+        ).start()
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ from datetime import datetime
 import pyperclip
 import threading
 import time
+import playsound
 from repo import savejson
 
 
@@ -14,7 +15,10 @@ def monitor_clipboard(reload: callable):
             savejson.save_clip(current)
             last = current
             reload()
-            print(f"New clip saved: {current}")
+            threading.Thread(
+                target=lambda: playsound.playsound("assets/sounds/clipadded.mp3"),
+                daemon=True,
+            ).start()
         time.sleep(1)
 
 
