@@ -18,5 +18,13 @@
     {
         "content": "pip -r uninstall requirements.txt\n",
         "timestamp": "2026-02-21T12:36:50.675929"
+    },
+    {
+        "content": "PySimpleGUI",
+        "timestamp": "2026-02-21T12:42:01.533847"
+    },
+    {
+        "content": "import subprocess\n\ndef notify(title, message):\n    subprocess.run(['notify-send', title, message])\n\nnotify(\"Clipboard Manager\", \"Nouveau contenu copi\u00e9 : Hello World\")",
+        "timestamp": "2026-02-21T12:43:12.659409"
     }
 ]
