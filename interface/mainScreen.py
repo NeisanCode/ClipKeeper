@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import customtkinter as ctk
 
 from repo import savejson
@@ -23,10 +21,19 @@ class MainScreen(ctk.CTk):
         self.geometry("400x300")
         self.protocol("WM_DELETE_WINDOW", self.onclose)
         self.createSideBar()
+        self.main_frame = ctk.CTkFrame(self, bg_color="#191F25", fg_color="#191F25")
+        self.main_frame.pack(side="left", fill="both", expand=True)
+        self.main_frame.grid_columnconfigure(0, weight=1)
+        self.main_frame.grid_columnconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(2, weight=1)
+        self.main_frame.grid_rowconfigure(0, weight=1)
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_rowconfigure(2, weight=1)
+        self.create_clip_elements()
 
     def createSideBar(self):
         self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
-        self.sidebar.pack(side="left", fill="y")
+        self.sidebar.pack(side="left", fill="both", expand=False)
 
         self.clip_elements = ctk.CTkButton(
             self.sidebar,
@@ -50,11 +57,35 @@ class MainScreen(ctk.CTk):
         )
         self.button_close.pack(pady=10, padx=14)
 
-
+    def create_clip_elements(self, clips: list[dict] = None):
+        frame_color = "#FFFFFF"
+        label_color = "#272727"
+        label_background_color = "#FFFFFF"
+        for clip in clips:
+            container = ctk.CTkFrame(
+                self.main_frame,
+                fg_color=frame_color,
+                corner_radius=8,
+            )
+            container.grid(row=0, column=0, sticky="nsew", padx=12, pady=12)
+            title = ctk.CTkLabel(
+                container,
+                text=clip["timestamp"],
+                font=self.FONT_TITLE,
+                text_color=label_color,
+            )
+            title.pack(pady=10, padx=10)
+            clip = ctk.CTkLabel(
+                container,
+                text=clip["content"],
+                font=self.FONT_NORMAL,
+                text_color=label_color,
+            )
+            clip.pack(pady=10, padx=10, fill="both", expand=True)
 
     def on_button_clip_click(self):
         clips = savejson.load_clips()
-        pprint(clips)
+        self.create_clip_elements(clips)
 
     def on_button_close_click(self):
         self.destroy()
