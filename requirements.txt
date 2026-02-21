@@ -1,2 +1,0 @@
-pyperclip==1.11.0
-pysimplegui==5.0.8.3
