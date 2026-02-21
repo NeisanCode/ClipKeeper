@@ -9,7 +9,7 @@ def monitor_clipboard():
     while True:
         current = pyperclip.paste()
         if current != last:
-            savejson.save_clip(current, datetime.now().isoformat())
+            savejson.save_clip(current)
             last = current
         time.sleep(1)
 

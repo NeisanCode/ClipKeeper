@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import customtkinter as ctk
 
 from repo import savejson
@@ -5,31 +7,42 @@ from repo import savejson
 
 ctk.set_appearance_mode("system")
 
-ctk.FontManager.load_font("fonts/Poppins-Bold.ttf")
-ctk.FontManager.load_font("fonts/Poppins-Light.ttf")
-ctk.FontManager.load_font("fonts/Poppins-Regular.ttf")
+ctk.FontManager.load_font("assets/fonts/Poppins-Bold.ttf")
+ctk.FontManager.load_font("assets/fonts/Poppins-Light.ttf")
+ctk.FontManager.load_font("assets/fonts/Poppins-Regular.ttf")
+from PIL import Image
+
 
 
 class MainScreen(ctk.CTk):
+    CARD_WIDTH = 200
+    CARD_MAX_HEIGHT = 150
+    CARD_CHARS_PER_LINE = 20
+    CARD_MAX_LINES = 4
+
     def __init__(self):
         super().__init__()
-        self.FONT_NORMAL = ctk.CTkFont(family="Poppins", size=14)
-        self.FONT_BOLD = ctk.CTkFont(family="Poppins", size=14, weight="bold")
+        self.FONT_NORMAL = ctk.CTkFont(family="Poppins", size=12)
+        self.FONT_BOLD = ctk.CTkFont(family="Poppins", size=12, weight="bold")
         self.FONT_TITLE = ctk.CTkFont(family="Poppins", size=24, weight="bold")
 
         self.title("Clipboard Manager")
-        self.geometry("400x300")
+        self.geometry("900x600")
         self.protocol("WM_DELETE_WINDOW", self.onclose)
         self.createSideBar()
+
         self.main_frame = ctk.CTkFrame(self, bg_color="#191F25", fg_color="#191F25")
         self.main_frame.pack(side="left", fill="both", expand=True)
-        self.main_frame.grid_columnconfigure(0, weight=1)
-        self.main_frame.grid_columnconfigure(1, weight=1)
-        self.main_frame.grid_columnconfigure(2, weight=1)
-        self.main_frame.grid_rowconfigure(0, weight=1)
-        self.main_frame.grid_rowconfigure(1, weight=1)
-        self.main_frame.grid_rowconfigure(2, weight=1)
-        self.create_clip_elements()
+
+        self.scroll_frame = ctk.CTkScrollableFrame(
+            self.main_frame,
+            fg_color="#191F25",
+            scrollbar_button_color="#2A2F35",
+        )
+        self.scroll_frame.pack(fill="both", expand=True, padx=16, pady=16)
+
+        for col in range(3):
+            self.scroll_frame.columnconfigure(col, weight=0, minsize=220)
 
     def createSideBar(self):
         self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
@@ -57,31 +70,72 @@ class MainScreen(ctk.CTk):
         )
         self.button_close.pack(pady=10, padx=14)
 
-    def create_clip_elements(self, clips: list[dict] = None):
-        frame_color = "#FFFFFF"
-        label_color = "#272727"
-        label_background_color = "#FFFFFF"
-        for clip in clips:
-            container = ctk.CTkFrame(
-                self.main_frame,
-                fg_color=frame_color,
+    def truncate_text(self, text: str) -> str:
+        max_chars = self.CARD_MAX_LINES * self.CARD_CHARS_PER_LINE
+        if len(text) <= max_chars:
+            return text
+        return text[: max_chars - 1].rstrip() + "..."
+
+    def create_clip_elements(self, clips: list[dict]):
+        for widget in self.scroll_frame.winfo_children():
+            widget.destroy()
+
+        for index, clip in enumerate(clips):
+            row = index // 3
+            column = index % 3
+
+            # Outer frame avec taille strictement fixée
+            outer = ctk.CTkFrame(
+                self.scroll_frame,
+                fg_color="#2A2F35",
                 corner_radius=8,
+                width=self.CARD_WIDTH,
+                height=self.CARD_MAX_HEIGHT,
             )
-            container.grid(row=0, column=0, sticky="nsew", padx=12, pady=12)
+            outer.grid(row=row, column=column, padx=8, pady=8, sticky="nw")
+            timestamp = datetime.fromisoformat(clip["timestamp"])
+            formatted_timestamp = timestamp.strftime("%d/%m/%Y")
             title = ctk.CTkLabel(
-                container,
-                text=clip["timestamp"],
-                font=self.FONT_TITLE,
-                text_color=label_color,
+                outer,
+                text=formatted_timestamp,
+                font=self.FONT_BOLD,
+                text_color="#AAAAAA",
+                anchor="w",
+                width=180,
             )
-            title.pack(pady=10, padx=10)
-            clip = ctk.CTkLabel(
-                container,
-                text=clip["content"],
+            title.place(x=10, y=18)
+
+            truncated = self.truncate_text(clip["content"])
+            content = ctk.CTkLabel(
+                outer,
+                text=truncated,
                 font=self.FONT_NORMAL,
-                text_color=label_color,
+                text_color="#FFFFFF",
+                wraplength=178,
+                justify="left",
+                anchor="nw",
+                width=180,
             )
-            clip.pack(pady=10, padx=10, fill="both", expand=True)
+            content.place(x=10, y=44)
+            icon = ctk.CTkImage(Image.open("assets/img/copy.png"), size=(16, 16))
+            clip_button = ctk.CTkButton(
+                outer,
+                text="",
+                font=self.FONT_BOLD,
+                fg_color="#1F618D",
+                hover_color="#1F618D",
+                cursor="hand2",
+                width=32,
+                height=32,
+                command=lambda c=clip["content"]: self.copy_to_clipboard(c),
+                image= icon
+            )
+            clip_button.place(x=160, y=8)
+
+    def copy_to_clipboard(self, text: str):
+        self.clipboard_clear()
+        self.clipboard_append(text)
+        self.update()
 
     def on_button_clip_click(self):
         clips = savejson.load_clips()

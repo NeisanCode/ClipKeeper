@@ -1,7 +1,10 @@
+from datetime import datetime
 import json
+from os import times
 
 
-def save_clip(content, timestamp):
+def save_clip(content):
+    timestamp = datetime.now().isoformat()
     clip = {"content": content, "timestamp": timestamp}
 
     try:
