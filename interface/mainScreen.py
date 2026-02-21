@@ -1,8 +1,8 @@
 from datetime import datetime
-
 import customtkinter as ctk
-
+import threading
 from repo import savejson
+from service.service import watcher_clipper
 
 
 ctk.set_appearance_mode("system")
@@ -11,7 +11,6 @@ ctk.FontManager.load_font("assets/fonts/Poppins-Bold.ttf")
 ctk.FontManager.load_font("assets/fonts/Poppins-Light.ttf")
 ctk.FontManager.load_font("assets/fonts/Poppins-Regular.ttf")
 from PIL import Image
-
 
 
 class MainScreen(ctk.CTk):
@@ -43,6 +42,8 @@ class MainScreen(ctk.CTk):
 
         for col in range(3):
             self.scroll_frame.columnconfigure(col, weight=0, minsize=220)
+        self.on_app_load()
+        watcher_clipper(self.after(0, self.on_app_load))
 
     def createSideBar(self):
         self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
@@ -50,8 +51,8 @@ class MainScreen(ctk.CTk):
 
         self.clip_elements = ctk.CTkButton(
             self.sidebar,
-            text="ClipBoard",
-            command=self.on_button_clip_click,
+            text="Reload",
+            command=self.on_app_load,
             font=self.FONT_BOLD,
             fg_color="#1F618D",
             hover_color="#1F618D",
@@ -62,13 +63,23 @@ class MainScreen(ctk.CTk):
         self.button_close = ctk.CTkButton(
             self.sidebar,
             text="Close",
-            command=self.on_button_close_click,
+            command=self.on_close_click,
             font=self.FONT_BOLD,
             fg_color="#C0392B",
             hover_color="#C0392B",
             cursor="hand2",
         )
         self.button_close.pack(pady=10, padx=14)
+
+    def on_app_load(self):
+        clips = savejson.load_clips()
+        self.create_clip_elements(clips)
+
+    def on_close_click(self):
+        self.destroy()
+
+    def onclose(self):
+        self.iconify()
 
     def truncate_text(self, text: str) -> str:
         max_chars = self.CARD_MAX_LINES * self.CARD_CHARS_PER_LINE
@@ -95,15 +106,6 @@ class MainScreen(ctk.CTk):
             outer.grid(row=row, column=column, padx=8, pady=8, sticky="nw")
             timestamp = datetime.fromisoformat(clip["timestamp"])
             formatted_timestamp = timestamp.strftime("%d/%m/%Y")
-            title = ctk.CTkLabel(
-                outer,
-                text=formatted_timestamp,
-                font=self.FONT_BOLD,
-                text_color="#AAAAAA",
-                anchor="w",
-                width=180,
-            )
-            title.place(x=10, y=18)
 
             truncated = self.truncate_text(clip["content"])
             content = ctk.CTkLabel(
@@ -117,18 +119,25 @@ class MainScreen(ctk.CTk):
                 width=180,
             )
             content.place(x=10, y=44)
-            icon = ctk.CTkImage(Image.open("assets/img/copy.png"), size=(16, 16))
+            icon = ctk.CTkImage(Image.open("assets/icons/copy.png"), size=(16, 16))
+
             clip_button = ctk.CTkButton(
                 outer,
                 text="",
                 font=self.FONT_BOLD,
-                fg_color="#1F618D",
+                fg_color="#1F658D",
                 hover_color="#1F618D",
                 cursor="hand2",
                 width=32,
                 height=32,
-                command=lambda c=clip["content"]: self.copy_to_clipboard(c),
-                image= icon
+                image=icon,
+            )
+            clip_button.configure(
+                command=lambda b=clip_button, i=icon, c=clip["content"]: self.on_copy(
+                    button=b,
+                    icon=i,
+                    content=c,
+                )
             )
             clip_button.place(x=160, y=8)
 
@@ -137,15 +146,11 @@ class MainScreen(ctk.CTk):
         self.clipboard_append(text)
         self.update()
 
-    def on_button_clip_click(self):
-        clips = savejson.load_clips()
-        self.create_clip_elements(clips)
-
-    def on_button_close_click(self):
-        self.destroy()
-
-    def onclose(self):
-        self.iconify()
+    def on_copy(self, button: ctk.CTkButton, icon: ctk.CTkImage, content: str):
+        self.copy_to_clipboard(content)
+        check_icon = ctk.CTkImage(Image.open("assets/icons/check.png"), size=(16, 16))
+        button.configure(image=check_icon)
+        threading.Timer(1.5, lambda: button.configure(image=icon)).start()
 
 
 if __name__ == "__main__":
